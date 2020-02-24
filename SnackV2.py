@@ -10,7 +10,7 @@ PRO = ["Insulin", "Zucker", "Popcorn", "Kekse", "Duplo", "Schnaps", "Joy", "Krae
        "Teller", "Milch"]
 PREIS = [1.20, 0.30, 3.20, 4.50, 1.60, 1.00, 0.40, 2.20, 1.30, 2.50]
 ANZ = [2, 1, 2, 2, 2, 2, 2, 2, 2, 2] 
-KONTO = 15.58 #in Euro 
+KONTO = 28.58 #in Euro 
 
 #Einzahlen
 def ein():
@@ -25,10 +25,10 @@ def ein():
     except ValueError:
         print("Bitte geben sie einen gültigen Wert ein! ?\n")
 
-    #Buchungs aufs KONTO
+    #Buchung aufs Konto
     if DIF >= 0:
         KONTO = KONTO + DIF
-        print("Ihr KONTOstand beträgt: {0}€ \n" .format(KONTO))
+        print("Ihr Kontostand beträgt: {0}€ \n" .format(KONTO))
     else:
         print("Bitte geben sie einen gültigen Wert ein! \n")
 
@@ -68,7 +68,7 @@ def kauf():
             if ANZ[AUS] == 0:
                 print("Das Produkt ist leider nicht mehr vorrätig! \n")
 
-            #Verrechnung mit dem KONTO und Abzug Vorrat, AUSgabe PROdukt
+            #Verrechnung mit dem KONTO und Abzug Vorrat, Ausgabe Produkt
             else:
                 KONTO = round(KONTO - PREIS[AUS], 2)
                 print("Sie haben ein/e {0} für {1}€ gekauft! \n Kontostand:  {2}€\n"
