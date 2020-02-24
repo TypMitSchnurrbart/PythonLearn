@@ -1,7 +1,10 @@
 #!/usr/bin/python3
 #! -*- coding: utf-8 -*-
 
-#Alexander Müller TIT'19
+"""
+Alexander Müller TIT'19
+Python Übung Snack-Automat Version 2.0
+"""
 
 import sys
 
@@ -9,15 +12,14 @@ import sys
 PRO = ["Insulin", "Zucker", "Popcorn", "Kekse", "Duplo", "Schnaps", "Joy", "Kraeuter",
        "Teller", "Milch"]
 PREIS = [1.20, 0.30, 3.20, 4.50, 1.60, 1.00, 0.40, 2.20, 1.30, 2.50]
-ANZ = [2, 1, 2, 2, 2, 2, 2, 2, 2, 2] 
-KONTO = 28.58 #in Euro 
+ANZ = [2, 2, 2, 0, 2, 2, 2, 2, 2, 2]
+KONTO = 29.28 #in Euro
 
 #Einzahlen
-def ein():
+def ein(KONTO):
     """
     Einzahlen von Geld auf Konto
     """
-    global KONTO
 
     #Abfrage Einzahlen
     try:
@@ -32,14 +34,15 @@ def ein():
     else:
         print("Bitte geben sie einen gültigen Wert ein! \n")
 
+    return KONTO
+
 
 #Kaufen
-def kauf():
+def kauf(KONTO):
     """
     Auswahl, Kauf und Ausgabe der Produkte
 
     """
-    global KONTO
 
     #Darstellung Angebot
     for i in range(len(PRO)):
@@ -77,6 +80,8 @@ def kauf():
     else:
         print("Bitte geben sie einen gültigen Wert ein!")
 
+    return KONTO
+
 
 def save():
     """
@@ -86,29 +91,30 @@ def save():
 
     SAV = []
 
-    with open(__file__, "r") as f:
-        for line in f:
+    with open(__file__, "r") as F:
+        for line in F:
             SAV.append(line)
 
-    with open(__file__, "w") as f:
-        SAV[12-1] = "ANZ = [{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}] \n" \
+    with open(__file__, "w") as F:
+        SAV[15-1] = "ANZ = [{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}]\n" \
             .format(ANZ[0], ANZ[1], ANZ[2], ANZ[3], ANZ[4], ANZ[5], ANZ[6], ANZ[7], ANZ[8], ANZ[9])
-        SAV[13-1] = "KONTO = {0} #in Euro \n" .format(KONTO)
+        SAV[16-1] = "KONTO = {0} #in Euro\n" .format(KONTO)
 
         for i in range(len(SAV)):
-            f.write(SAV[i])
+            F.write(SAV[i])
 
     sys.exit(101)
 
-def refill():
+def refill(RE_ANZ):
     """
     Refill der Vorraete
 
     return des Refill
     """
-    global ANZ
 
-    ANZ = [2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+    RE_ANZ = [2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+
+    return RE_ANZ
 
 #Hauptschleife
 if __name__ == "__main__":
@@ -124,12 +130,12 @@ if __name__ == "__main__":
 
         #Fallunterscheidung
         if B == "1":
-            ein()
+            KONTO = ein(KONTO)
         elif B == "2":
-            kauf()
+            KONTO = kauf(KONTO)
         elif B == "3":
             save()
         elif B == "RE":
-            refill()
+            ANZ = refill(ANZ)
         else:
             print("Bitte halten sie sich an die möglichen Eingaben!\n")
