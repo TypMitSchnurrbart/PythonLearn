@@ -1,0 +1,2 @@
+Horst, 17, 3.40, Bertl, Hund, 6.50
+Insulin, 3.20, 2, Kekse, 4.50, 2, Buch, 15.40, 2
