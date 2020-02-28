@@ -3,75 +3,95 @@
 
 """
 Snack_V3 Opjektorientierter Automat mit Nutzerkonten
+
+Alexander Müller TIT'19
 """
 
 import sys
 
-Counter_ID = 0
-Abfrage = True
-User_List = []
-Nutzer_Konten = []
-Produkt_Auswahl = ["Insulin", "Kekse", "Buch"]
-Preise = [4.50, 2.30, 1.69]
-Anz = []
+COUNTER_ID = 0
+ABFRAGE = 1
+USER_LIST = []
 
-class Produkte:
-
-    def __init__(self, Name, Preis, Anzahl):
-        self.Name = Name
-        self.Preis = Preis
-        self.Anzahl = Anzahl
-
-        Produkt_Auswahl.append(self.Name)
-        print(Produkt_Auswahl)
-
-    def Get_Preis(self):
-        return self.Preis
+PRODUKT_AUSWAHL = ["Insulin", "Kekse", "Buch"]
+PREISE = [4.50, 2.30, 1.69]
+ANZ = []
 
 
 class Nutzer:
+    """
+    DOC-STRING
+    """
 
-    def __init__(self, Bname, Pw, Konto = 0):
+    def __init__(self, b_name, passw, konto=0):
+        """
+        Konstruktor Nutzer
+        :param b_name:
+        :param passw:
+        :param konto:
+        """
 
-        self.Bname = Bname
-        self.Pw = Pw
-        self.Konto = Konto
+        self.b_name = b_name
+        self.passw = passw
+        self.konto = konto
 
-        Nutzer_Konten.append(self.Bname)
+        #Nutzer_Konten.append(self.b_name)
 
-    def Set_Konto(self, Konto):
-        self.Konto = Konto
+    def set_konto(self, konto):
+        """
+        Setter Konto
+        :param konto:
+        :return:
+        """
+        self.konto = konto
 
-    def Get_Konto(self):
-        return self.Konto
+    def get_konto(self):
+        """
+        Getter Konto
+        :return: self.konto
+        """
+        return self.konto
 
-    def Get_Bname(self):
-        return self.Bname
+    def get_bname(self):
+        """
+        Getter Username
+        :return:
+        """
+        return self.b_name
 
-    def Get_Pw(self):
-        return self.Pw
+    def get_pw(self):
+        """
+        Getter Username
+        :return:
+        """
+        return self.passw
 
 class Snacc:
+    """
+    DOC-STRING für PyLint
+    """
 
     def __init__(self):
-        pass
+        """
+        Kontruktor Snacc
+        """
 
-    def Einzahlung(self, Bname):
+    def einzahlung(self, b_name):
         """
         Einzahlen auf persönliches Konto
 
-        :param Bname: Nutzerkennung zur Kontoaddressierung
+        :param b_name: Nutzerkennung zur Kontoaddressierung
         :return: Kontostand
         """
 
-        Kontostand = float(Bname.Get_Konto())
+        kontostand = float(b_name.get_konto())
 
         try:
-            Konto_Cache = round(float(input("Wie viel wollen sie einzahlen? \n")), 2)
+            konto_cache = round(float(input("Wie viel wollen sie einzahlen? \n")), 2)
 
-            if Konto_Cache > 0:
-                Kontostand = round(float(Kontostand + Konto_Cache), 2)
-                Bname.Set_Konto(Kontostand)
+            if konto_cache > 0:
+                kontostand = round(float(kontostand + konto_cache), 2)
+                b_name.set_konto(kontostand)
             else:
                 print("Frech Kati.")
 
@@ -79,33 +99,34 @@ class Snacc:
             print("Geben sie nur gültige Werte ein! \n")
 
 
-    def Kaufen(self, Bname, Prod, Anzahl):
+    def kaufen(self, b_name, prod, anzahl):
         """
         Kaufen der Produkte
-        :param Bname:
-        :param Prod:
-        :param Anzahl:
+        :param b_name:
+        :param prod:
+        :param anzahl:
         :return:
         """
-        Kontostand = Bname.Get_Konto()
+        kontostand = b_name.get_konto()
 
-        for Pro in range(0, len(Prod)):
-            print("{0}  Preis: {1}€  Rest: {2}   [{3}]" .format(Prod[Pro], Preise[Pro], Anzahl[Pro], Pro ))
+        for pro in range(0, len(prod)):
+            print("{0}  Preis: {1}€  Rest: {2}   [{3}]"
+                  .format(prod[pro], PREISE[pro], anzahl[pro], pro))
 
         try:
-            Auswahl = int(input("""Was wollen sie kaufen? \n"""))
+            auswahl = int(input("""Was wollen sie kaufen? \n"""))
         except ValueError:
             sys.exit()
 
-        if Kontostand >= Preise[Auswahl]:
-            if Anz[Auswahl] > 0:
+        if kontostand >= PREISE[auswahl]:
+            if ANZ[auswahl] > 0:
 
-                Anz[Auswahl] = Anz[Auswahl] - 1
-                Kontostand = round(Kontostand - Preise[Auswahl], 2)
+                ANZ[auswahl] = ANZ[auswahl] - 1
+                kontostand = round(kontostand - PREISE[auswahl], 2)
 
                 print("Sie haben {0} gekauft \n Restguthaben: {1}€ \n"
-                      .format(Prod[Auswahl], Kontostand))
-                Bname.Set_Konto(Kontostand)
+                      .format(prod[auswahl], kontostand))
+                b_name.set_konto(kontostand)
 
             else:
                 print("Leider nicht mehr vorrätig! \n")
@@ -116,194 +137,202 @@ class Snacc:
 
 
 
-def Produkt_Menge():
+def produkt_menge():
     """
     Erstellen der Produkte Mengen
-    :return:
+    :return: Speicher Liste save
     """
-    Save = []
+    save = []
 
-    Read = open("Snack_Speicher.txt", "r")
-    for Lines in Read:
-        Save.append(Lines)
+    read = open("Snack_Speicher.txt", "r")
+    for lines in read:
+        save.append(lines)
 
-    Save = Save[1].split(", ")
+    save = save[1].split(", ")
 
-    for Count in range(0,len(Save)):
-        Save[Count] = int(Save[Count])
+    for count in range(0, len(save)):
+        save[count] = int(save[count])
 
-    print(Save)
-    return Save
-
+    return save
 
 
 
-def Speichern(Benutzername, Comt, Anzahlen):
+
+def speichern(benutzername, comt, anzahlen):
     """
     Speichern der Benutzer und Mengen
-    :param Benutzername:
-    :param Comt:
-    :param Anzahlen:
-    :return:
+    :param benutzername:
+    :param comt:
+    :param anzahlen:
+    :return: -
     """
-    Save = []
+    save = []
 
-    Balance = Benutzername.Get_Konto()
+    balance = benutzername.get_konto()
 
-    Leser = open("Snack_Speicher.txt", "r")
+    leser = open("Snack_Speicher.txt", "r")
 
-    for Lines in Leser:
-        Save.append(Lines)
+    for lines in leser:
+        save.append(lines)
 
-    Leser.close()
+    leser.close()
 
-    Save = Save[0].split(", ")
+    save = save[0].split("\n")
+    save = save[0].split(", ")
 
-    Leser = open("Snack_Speicher.txt", "w")
+    leser = open("Snack_Speicher.txt", "w")
 
-    if Comt >= 0:
-        Save[Comt + 2] = Balance
+    end = 1
 
-        for i in Save:
-            End = len(Save) - 1
-            if i == Save[End]:
-                Leser.write("{0}" .format(i))
+    if comt >= 0:
+        save[comt + 2] = balance
+
+        for i in save:
+            if end == len(save):
+                leser.write("{0}\n" .format(i))
             else:
-                Leser.write("{0}, " .format(i))
-
+                leser.write("{0}, " .format(i))
+            end += 1
 
     else:
-        Save.append(Benutzername.Get_Bname())
-        Save.append(Benutzername.Get_Pw())
-        Save.append(Benutzername.Get_Konto())
+        save.append("{0}".format(benutzername.Get_b_name()))
+        save.append("{0}".format(benutzername.get_pw()))
+        save.append("{0}".format(benutzername.get_konto()))
 
+        for i in save:
+            if end == len(save):
+                leser.write("{0}\n" .format(i))
+            else:
+                leser.write("{0}, " .format(i))
+            end += 1
 
-    Save = Anzahlen
+    save = anzahlen
+    end = 1
 
-    for i in Save:
-        End = len(Save) - 1
-        if i == Save[End]:
-            Leser.write("{0}" .format(i))
+    for i in save:
+
+        if end == len(save):
+            leser.write("{0}" .format(i))
         else:
-            Leser.write("{0}, " .format(i))
+            leser.write("{0}, " .format(i))
+        end += 1
 
-    Leser.close()
+    leser.close()
     sys.exit(201)
 
 
+def refill(nachschub):
+    """
+    Refill der Produkte
+    :param nachschub:
+    :return: nachschub wieder auf 2 aufegfüllt
+    """
+    for i in range(0, len(nachschub)):
+        nachschub[i] = 2
+    return nachschub
 
-    
 
 if __name__ == "__main__":
 
-    Boot = input("Haben sie bereits ein Konto? j/n \n")
+    BOOT = input("Haben sie bereits ein Konto? j/n \n")
 
-    if Boot == "j":
-        Bname_In = input("Username: ")
-        Pw_In = input("Passwort: ")
+    if BOOT == "j":
+        BNAME_IN = input("Username: ")
+        PW_IN = input("Passwort: ")
 
-        Reader = open("Snack_Speicher.txt","r")
-        for Line in Reader:
-            User_List.append(Line)
+        READER = open("Snack_Speicher.txt", "r")
+        for Line in READER:
+            USER_LIST.append(Line)
 
-        User_List = User_List[0].split("\n")
-        User_List = User_List[0].split(", ")
-        print(User_List)
+        USER_LIST = USER_LIST[0].split("\n")
+        USER_LIST = USER_LIST[0].split(", ")
 
-        for Com in range(len(User_List)):
+        for Com in range(len(USER_LIST)):
 
-            Name_Cache = User_List[Com]
+            Name_Cache = USER_LIST[Com]
 
-            if Name_Cache == Bname_In:
-                Pw_Cache = User_List[Com+1]
+            if Name_Cache == BNAME_IN:
+                Pw_Cache = USER_LIST[Com+1]
 
-                if Pw_In == Pw_Cache:
-                    Counter_ID = Com
+                if PW_IN == Pw_Cache:
+                    COUNTER_ID = Com
                     print("Richtige Daten!\n")
 
-                    Konto_Value = User_List[Com+2]
+                    BNAME_IN = Nutzer(BNAME_IN, Pw_Cache, round(float(USER_LIST[Com + 2]), 2))
 
-                    Bname_In = Nutzer(Bname_In, Pw_Cache, round(float(Konto_Value),2))
-
-                    User_List.pop(Com+2)
-                    User_List.pop(Com+1)
-                    User_List.pop(Com)
-
-                    print(User_List)
-                    break
+                    Com = len(USER_LIST)
 
                 else:
                     print("Falsches Passwort!")
-                    exit()
+                    sys.exit(12)
 
-            elif Name_Cache != Bname_In and Com == len(User_List)+1:
+            elif Name_Cache != BNAME_IN and Com == len(USER_LIST)+1:
                 print("Kein gültiger Benutzername!")
-                exit()
+                sys.exit(13)
 
 
-    elif Boot == "n":
-        while Abfrage == True:
-            Bname_In = input("Neuer Username: ")
-            Pw_In = input("Neues Passwort: ")
 
-            Reader = open("Snack_Speicher.txt", "r")
-            for Line in Reader:
-                User_List.append(Line)
+    elif BOOT == "n":
 
-            User_List = User_List[0].split(", ")
-            print(User_List)
+        READER = open("Snack_Speicher.txt", "r")
+        for Line in READER:
+            USER_LIST.append(Line)
 
-            for Com in range(0,len(User_List)):
+        USER_LIST = USER_LIST[0].split(", ")
 
-                Name_Cache = User_List[Com]
+        while ABFRAGE == 1:
 
-                if Name_Cache == Bname_In:
+            BNAME_IN = input("Neuer Username: ")
+            PW_IN = input("Neues Passwort: ")
+
+            for Com in range(0, len(USER_LIST), 3):
+
+                Name_Cache = USER_LIST[Com]
+
+                if Name_Cache == BNAME_IN:
                     print("Name existiert bereits! \n")
 
-                elif Name_Cache != Bname_In and Com == len(User_List)-1:
-                    Bname_In = Nutzer(Bname_In, Pw_In)
-                    Com = -1
-                    Abfrage = False
+                    Com = len(USER_LIST)
+
+                elif Name_Cache != BNAME_IN and Com == len(USER_LIST)-1:
+                    BNAME_IN = Nutzer(BNAME_IN, PW_IN)
+                    COUNTER_ID = -1
+                    ABFRAGE = 2
                     print("Ihr Konto wurde erstellt!")
 
     else:
         print("Keine gütlige Angabe!")
-        exit()
+        sys.exit(901)
+
 
     #Erstellung Automat
-    Automat = Snacc()
-
-    #Erstellung der Nutzer
-    #Nutzer_Erstellung()
+    AUTOMAT = Snacc()
 
     #Erstellung der Produkte
-    Anz = Produkt_Menge()
+    ANZ = produkt_menge()
 
     while True:
 
-        Input_Cache = input("""\nWillkommen beim Snacc! \n Eingeloggt als: {0}
+        INPUT_CACHE = input("""\nWillkommen beim Snacc! \n Eingeloggt als: {0}
         Guthaben: {1}€
         Was wollen sie tun?
             Einzahlen   [1]
             Kaufen      [2]
-            Beenden     [3]\n""" .format(Bname_In.Get_Bname(), Bname_In.Get_Konto()))
+            Beenden     [3]\n""" .format(BNAME_IN.get_bname(), BNAME_IN.get_konto()))
 
 
 
-        if Input_Cache == "1":
-            Automat.Einzahlung(Bname_In)
-            print("Ihr neuer Kontostand: {0}€ \n" .format(Bname_In.Get_Konto()))
+        if INPUT_CACHE == "1":
+            AUTOMAT.einzahlung(BNAME_IN)
+            print("Ihr neuer Kontostand: {0}€ \n" .format(BNAME_IN.get_konto()))
 
-        elif Input_Cache == "2":
-            Automat.Kaufen(Bname_In, Produkt_Auswahl, Anz)
+        elif INPUT_CACHE == "2":
+            AUTOMAT.kaufen(BNAME_IN, PRODUKT_AUSWAHL, ANZ)
 
-        elif Input_Cache == "3":
-            Speichern(Bname_In, Counter_ID, Anz)
+        elif INPUT_CACHE == "3":
+            speichern(BNAME_IN, COUNTER_ID, ANZ)
 
-
-
-
-
-
-
-
+        elif INPUT_CACHE == "RE":
+            ANZ = refill(ANZ)
+        else:
+            print("Bitte geben sie nur die verfügbaren Optionen ein")

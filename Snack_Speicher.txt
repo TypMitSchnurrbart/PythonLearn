@@ -1,2 +1,2 @@
-Horst, 17, 7.82, Bertl, Hund, 8.61, end
+Horst, 17, 12.34, Bertl, Hund, 4.11, Goethes, Faust, 16.44
 2, 1, 2
