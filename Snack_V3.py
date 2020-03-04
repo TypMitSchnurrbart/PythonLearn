@@ -157,7 +157,6 @@ def produkt_menge():
 
 
 
-
 def speichern(benutzername, comt, anzahlen):
     """
     Speichern der Benutzer und Mengen
@@ -195,7 +194,7 @@ def speichern(benutzername, comt, anzahlen):
             end += 1
 
     else:
-        save.append("{0}".format(benutzername.Get_b_name()))
+        save.append("{0}".format(benutzername.get_bname()))
         save.append("{0}".format(benutzername.get_pw()))
         save.append("{0}".format(benutzername.get_konto()))
 
@@ -294,7 +293,7 @@ if __name__ == "__main__":
 
                     Com = len(USER_LIST)
 
-                elif Name_Cache != BNAME_IN and Com == len(USER_LIST)-1:
+                elif Name_Cache != BNAME_IN and Com == len(USER_LIST)-3:
                     BNAME_IN = Nutzer(BNAME_IN, PW_IN)
                     COUNTER_ID = -1
                     ABFRAGE = 2

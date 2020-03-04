@@ -1,2 +1,2 @@
-Horst, 17, 12.34, Bertl, Hund, 4.11, Goethes, Faust, 16.44
+Test, User, 6.50, Kati, hi, 17.7
 2, 1, 2
