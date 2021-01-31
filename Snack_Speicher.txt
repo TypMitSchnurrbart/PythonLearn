@@ -1,2 +1,2 @@
-Test, User, 6.50, Kati, hi, 17.7
-2, 1, 2
+Test, User, 6.50, Kati, hi, 17.7, Hallo, jausa, 9.5
+1, 1, 2
